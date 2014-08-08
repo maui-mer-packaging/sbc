@@ -1,0 +1,43 @@
+Name: sbc
+Version: 1.2
+Release: 1
+Summary: SBC library
+Description: |
+  Bluetooth low-complexity, subband codec (SBC) library.
+Group: System/Libraries
+License: GPLv2+
+URL: http://www.kernel.org/pub/linux/bluetooth/
+RunFdupes:
+    - "%{_datadir}"
+    - "%{_includedir}"
+SetupOptions: -q -n %{name}-%{version}/upstream
+Sources:
+    - "%{name}-%{version}.tar.xz"
+
+Requires:
+    - fdupes
+PkgConfigBR:
+    - sndfile >= 1.0.20
+
+Configure: reconfigure
+
+Files:
+    - "%{_libdir}/libsbc.so.*"
+
+SubPackages:
+    - Name: tools
+      Summary: SBC tools
+      Group: System/Base
+      Files:
+          - "%{_bindir}/sbcdec"
+          - "%{_bindir}/sbcenc"
+          - "%{_bindir}/sbcinfo"
+
+    - Name: devel
+      Summary: SBC development headers and libraries
+      Description: "Description: %{summary}"
+      Group: Development/Libraries
+      Files:
+          - "%{_libdir}/libsbc.so"
+          - "%{_libdir}/pkgconfig/*.pc"
+          - "%{_includedir}/sbc/*.h"
